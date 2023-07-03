@@ -12,6 +12,8 @@ const Auth = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [variant, setVariant] = useState('login');
 
   const toggleVariant = useCallback(() => {
@@ -23,15 +25,21 @@ const Auth = () => {
   const login = useCallback(
     async (e: { preventDefault: () => void }) => {
       e.preventDefault();
+      if (!email || !password) return null;
+      setIsLoading(true);
       try {
         await signIn('credentials', {
           email,
           password,
           callbackUrl: '/profiles',
         });
+        setIsLoading(false);
       } catch (error) {
+        setIsLoading(false);
+
         console.log(error);
       }
+      setIsLoading(false);
     },
     [email, password]
   );
@@ -39,6 +47,8 @@ const Auth = () => {
   const register = useCallback(
     async (e: { preventDefault: () => void }) => {
       e.preventDefault();
+      if (!email || !password || !name) return null;
+      setIsLoading(true);
       try {
         await axios.post('/api/register', {
           email,
@@ -46,9 +56,12 @@ const Auth = () => {
           password,
         });
         login(e);
+        setIsLoading(false);
       } catch (error) {
+        setIsLoading(false);
         console.log(error);
       }
+      setIsLoading(false);
     },
     [email, name, password, login]
   );
@@ -96,7 +109,10 @@ const Auth = () => {
                 type='password'
                 value={password}
               />
-              <button className='bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition'>
+              <button
+                className={`bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition disabled:hover:bg-red-600/50 disabled:opacity-50`}
+                disabled={isLoading}
+              >
                 {variant === 'login' ? 'Login' : 'Sign up'}
               </button>
             </form>

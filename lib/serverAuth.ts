@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
 
 import prismadb from '@/lib/prismadb';
-
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 
 const serverAuth = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -19,7 +18,7 @@ const serverAuth = async (req: NextApiRequest, res: NextApiResponse) => {
   });
 
   if (!currentUser) {
-    throw new Error('Not signed in.');
+    throw new Error('Not signed in');
   }
 
   return { currentUser };

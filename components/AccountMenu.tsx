@@ -7,6 +7,7 @@ interface AccountMenuProps {
 }
 
 const AccountMenu: React.FC<AccountMenuProps> = ({ visible }) => {
+  const { data } = useCurrentUser();
   if (!visible) return null;
   return (
     <div className='bg-black w-56 absolute top-14 right-0 flex flex-col py-5 border-2 border-gray-800'>
@@ -18,7 +19,7 @@ const AccountMenu: React.FC<AccountMenuProps> = ({ visible }) => {
             className='w-8 rounded-md'
           />
           <p className='text-white text-sm group-hover/item:underline'>
-            Username
+            {data?.name}
           </p>
         </div>
         <hr className='bg-gray-500 border-0 h-px my-4' />
