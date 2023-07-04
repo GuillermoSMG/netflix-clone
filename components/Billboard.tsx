@@ -1,20 +1,27 @@
 import useBillboard from '@/hooks/useBillboard';
-import React from 'react';
+import { useCallback } from 'react';
 
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import PlayButton from './PlayButton';
+import useInfoModal from '@/hooks/useInfoModal';
 
 const Billboard = () => {
   const { data } = useBillboard();
+  const { openModal, isOpen } = useInfoModal();
+
+  const handleOpenModal = useCallback(() => {
+    openModal(data?.id);
+  }, [openModal, data?.id]);
+
   return (
     <div className='relative h-[56.25dvw] m-0'>
       <video
         className='w-full h-[56.25dvw] object-cover brightness-[60%]'
-        autoPlay
         muted
         loop
         poster={data?.thumbnailUrl}
         src={data?.videoUrl}
+        autoPlay
       />
       <div className='absolute top-[30%] md:top-[40%] ml-4 md:ml-16'>
         <p className='text-white text-xl md:text-5xl h-full w-[50%] lb:text-6xl font-bold drop-shadow-xl'>
@@ -25,7 +32,10 @@ const Billboard = () => {
         </p>
         <div className='flex items-center mt-3 md:mt-4 gap-3'>
           <PlayButton movieId={data?.id} />
-          <button className='bg-white/40 text-white rounded py-1 md:py-2 px-2 md:px-4 w-auto text-xs lg:text-lg font-semibold flex items-center hover:bg-white/30 transition'>
+          <button
+            onClick={handleOpenModal}
+            className='bg-white/40 text-white rounded py-1 md:py-2 px-2 md:px-4 w-auto text-xs lg:text-lg font-semibold flex items-center hover:bg-white/30 transition'
+          >
             <AiOutlineInfoCircle className='mr-1' />
             More Info
           </button>
