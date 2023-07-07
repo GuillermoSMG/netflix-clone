@@ -116,7 +116,7 @@ const Auth = () => {
                 {variant === 'login' ? 'Login' : 'Sign up'}
               </button>
             </form>
-            {/* <div className='flex items-center gap-4 mt-8 justify-center'>
+            <div className='flex items-center gap-4 mt-8 justify-center'>
               <button
                 onClick={() => signIn('google', { callbackUrl: '/profiles' })}
                 className='w-10 h-10 bg-white rounded-full flex items-center justify-center hover:opacity-80 transition'
@@ -129,7 +129,7 @@ const Auth = () => {
               >
                 <FaGithub size={30} />
               </button>
-            </div> */}
+            </div>
             <p className='text-neutral-500 mt-12'>
               {variant === 'login'
                 ? 'First time using Netflix?'
